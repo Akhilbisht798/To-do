@@ -12,10 +12,13 @@ export default class Projects {
     }
 
     push_task(task) {
+        if (this.task.find((item) => item.taskName() === task)) return;
         this.task.push(new Tasks(task));
     }
 
-    remove_task(index) {
+    remove_task(name) {
+        let Task = this.task.find((item) => item.taskName() === name)
+        let index = this.task.indexOf(Task);
         this.task.splice(index, 1);
     }
 

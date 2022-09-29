@@ -7,6 +7,10 @@ export default class Task {
         this.date = date;
     }
 
+    taskName() {
+        return this.Name;
+    }
+
     isCompleted() {
         this.Complete = true;
     }

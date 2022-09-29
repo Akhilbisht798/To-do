@@ -48,7 +48,12 @@ export default class Storage {
         const Todo = Storage.getTodoList();
         Todo.findProject(project).push_task(Task);
         localStorage.clear();
-        console.log(Todo);
+        Storage.saveTodolist(Todo);
+    }
+
+    static deleteTask(project, taskName) {
+        const Todo = Storage.getTodoList();
+        Todo.findProject(project).remove_task(taskName);
         Storage.saveTodolist(Todo);
     }
 }
