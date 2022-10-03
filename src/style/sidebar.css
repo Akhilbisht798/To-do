@@ -8,6 +8,7 @@ html,
 head {
     width: 100%;
     min-height: 100vh;
+    /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
 }
 
 #SideBar {

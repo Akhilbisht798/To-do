@@ -114,6 +114,7 @@ export default class UI {
         let div = document.createElement('div');
         div.id = "Todos";
         let container = document.querySelector(".container");
+        div.appendChild(UI.AddTaskBtn());
         container.appendChild(div);
     }
 
@@ -131,6 +132,7 @@ export default class UI {
     static GetTodos(text) {
         let Todos = document.getElementById('Todos');
         Todos.innerHTML = "";
+        Todos.appendChild(UI.AddTaskBtn())
         const Todo = Storage.getTodoList();
         const p = Todo.findProject(text);
         p.task.forEach(t => {
@@ -165,11 +167,10 @@ export default class UI {
     //Make popup for input task.
     //Make popup for onclicking tasks to get imformation.
     static AddTaskBtn() {
-        let Todos = document.getElementById('Todos');
         let btn = document.createElement('button');
         btn.innerHTML = "New Task";
         btn.addEventListener('click', UI.NewTaskPopUPOpen);
-        Todos.appendChild(btn);
+        return btn;
     }
 
     static POPUPNewTask() {
@@ -177,9 +178,26 @@ export default class UI {
         div.classList.add("modal-container");
         div.innerHTML = `
         <div class="modal">
-        <h1>thIS IS Awesome 😎</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque dolore fuga totam, sunt vitae inventore optio
-            saepe suscipit expedita omnis?</p>
+            <form action="#">
+            <div class="Task-details">
+                <div class="input-box">
+                    <span class="detail">Task Name</span>
+                    <input type="text" placeholder="Enter New task Name" required id="taskName">
+                </div>
+                <div class="input-box">
+                    <span class="detail">Date</span>
+                    <input type="date" placeholder="Enter New task Name" required id="Date">
+                </div>
+                <div class="input-box">
+                    <span class="detail">Description</span>
+                    <textarea name="paragraph_text" cols="50" rows="6" id="des"></textarea>
+                </div>
+            </div>
+            <div class="Submitbtn">
+                <button class="Submit">submit</button>
+                <button class="cancel">cancel</button>
+            </div>
+        </form>
         </div>`;
         return div;
     }
@@ -187,5 +205,30 @@ export default class UI {
     static NewTaskPopUPOpen() {
         let Todos = document.getElementById('Todos');
         Todos.appendChild(UI.POPUPNewTask())
+        let submit = document.querySelector('.Submit');
+        submit.addEventListener('click', UI.GetInputForTask);
+        let cancel = document.querySelector('.cancel');
+        cancel.addEventListener('click', UI.CancelAddingTask);
+    }
+
+    static GetInputForTask() {
+        console.log('submit');
+        let taskname = document.getElementById('taskName');
+        let Date = document.getElementById('Date');
+        let description = document.getElementById('des');
+
+        Storage.addNewTask(UI.curr, taskname.value);
+        const todo = Storage.getTodoList()
+        const p = todo.findProject(UI.curr);
+        const to = p.task[p.task.length - 1];
+        to.setDate(Date.value);
+        to.setDescription(description.value);
+        Storage.saveTodolist(todo);
+        UI.GetTodos(UI.curr);
+    }
+
+    static CancelAddingTask() {
+        let div = document.querySelector('.modal-container');
+        div.parentNode.removeChild(div);
     }
 }
