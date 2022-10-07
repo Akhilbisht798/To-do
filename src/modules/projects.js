@@ -13,7 +13,9 @@ export default class Projects {
 
     push_task(task) {
         if (this.task.find((item) => item.taskName() === task)) return;
-        this.task.push(new Tasks(task));
+        const t = new Tasks(task);
+        t.BelongTo(this.name);
+        this.task.push(t);
     }
 
     remove_task(name) {

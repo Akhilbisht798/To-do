@@ -1,5 +1,4 @@
 import Storage from './Storage';
-import Projects from './projects';
 import Todolist from './Todolist';
 
 export default class UI {
@@ -9,6 +8,8 @@ export default class UI {
     static loadProjects() {
         let container = document.querySelector(".container");
 
+        container.appendChild(UI.header());
+        UI.headerContent();
         let div = document.createElement('div');
         div.id = "SideBar";
         container.appendChild(div);
@@ -141,6 +142,12 @@ export default class UI {
         UI.deleteTodo();
     }
 
+    static ForStaticTodo() {
+        let Todos = document.getElementById('Todos');
+        Todos.innerHTML = "";
+        Todos.appendChild(UI.AddTaskBtn());
+    }
+
     static CreateTodo(todo) {
         let Todos = document.getElementById('Todos');
         let div = document.createElement('div');
@@ -162,10 +169,6 @@ export default class UI {
         })
     }
 
-    // Create a Add Todo btn.
-    // figure out time and date.
-    //Make popup for input task.
-    //Make popup for onclicking tasks to get imformation.
     static AddTaskBtn() {
         let btn = document.createElement('button');
         btn.innerHTML = "New Task";
@@ -190,7 +193,7 @@ export default class UI {
                 </div>
                 <div class="input-box">
                     <span class="detail">Description</span>
-                    <textarea name="paragraph_text" cols="50" rows="6" id="des"></textarea>
+                    <textarea name="paragraph_text" cols="25" rows="6" id="des"></textarea>
                 </div>
             </div>
             <div class="Submitbtn">
@@ -230,5 +233,34 @@ export default class UI {
     static CancelAddingTask() {
         let div = document.querySelector('.modal-container');
         div.parentNode.removeChild(div);
+    }
+
+    //Making this week and today work.
+    //Show details of todo on clicking.
+    //Loop over entire todolist and add div to today and this week and Inbox so can be deleted from both part.
+    static Inbox() {
+        const todos = Storage.getTodoList();
+        todos.projects.forEach((project) => {
+            project.task.forEach((task) => {
+                UI.ForStaticTodo();
+                UI.CreateTodo(task);
+
+            })
+        })
+    }
+
+    static header() {
+        let div = document.createElement('div');
+        div.id = "header";
+        return div;
+    }
+
+    static headerContent() {
+        let heading = document.createElement('div');
+        heading.innerHTML = "To - Do";
+        heading.id = 'head-heading';
+
+        let header = document.getElementById('header');
+        header.appendChild(heading);
     }
 }

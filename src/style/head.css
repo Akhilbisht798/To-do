@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root {
+    --poppins: 'Poppins', sans-serif;
+}
+
+* {
+    font-family: var(--poppins);
+}
+
+.container {
+    display: grid;
+    min-height: 100vh;
+}
+
+#header {
+    grid-column: 1/8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Todos {
+    grid-column: 2/8;
+    grid-row: 2/4;
+}
+
+#SideBar {
+    grid-row: 2/4;
+}
+
+.pname {
+    padding: 0.4em 1.2em;
+    border-radius: 30px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+#head-heading {
+    font-size: 2.6em;
+    font-weight: 500;
+    font-family: var(--poppins);
+}
